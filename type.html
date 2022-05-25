@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			//基本数据类型
+			//Number String Boolean Undefined Null Symbol
+			//特点：直接存在栈内存
+			//值的比较 == 只进行值的比较，在比较时会进行数据类型的隐式转换
+			// === 不仅进行值的比较，还要进行数据类型的比较
+			console.log(1 == true) //true
+			console.log(1 == false) //false
+
+			//引用数据类型Object
+			//Object Array Function
+			//特点：引用数据类型同时保存在栈内存和堆内存中
+			//在栈中储存的是指针，指针指向堆内存中的地址
+			//值的比较，比较的是两个变量的引用是否一致（比较应用中的基本数据类型时，==仍为值比较，===值+数据类型）
+			let obj11 = {
+				a: {
+					b: 3,
+				},
+			}
+			let obj12 = {
+				a: {
+					b: 3,
+				},
+			}
+			console.log(obj11 == obj12) //false
+			console.log(obj11 === obj12) //false
+			console.log(obj11.a.b == obj12.a.b) //true
+			console.log(obj11.a == obj12.a) //false
+			console.log(obj11.a === obj12.a) //false
+			//判断类型typeof instanceof Object.prototype.toString.call constructor
+			//typeof方法返回一个字符串，表示检测的类型
+			console.log(typeof 42) // 'number'
+			console.log(typeof 'string') // 'string'
+			console.log(typeof true) // 'boolean'
+			console.log(typeof dsadwd1212313) // 'undefind'
+			console.log(typeof []) //'object'
+			console.log(typeof null) //'object'
+
+			//instanceof用于检测构造函数的prototype属性是否出现在某个实例对象的原型链上
+			function Car(make, model, year) {
+				this.make = make
+				this.model = model
+				this.year = year
+			}
+
+			const auto = new Car('Honda', 'Accord', 1998)
+			console.log(auto instanceof Car) //true
+			console.log(auto instanceof Object) //true
+		</script>
+	</body>
+</html>

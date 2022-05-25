@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<!-- var声明的变量 （污染全局变量） -->
+		var a = 1 console.log(window.a)
+		<!--  //1 -->
+
+		<!-- //var 导致变量提升问题，在没有声明变量之前就可以使用 -->
+		<!-- //function var会导致变量提升 -->
+		console.log(b) var b = 1;
+
+		<!-- //var 可以被重复声明 let可以解决重复定义的问题 -->
+		var c = 1; var c = 2; var c = 3;
+
+		<!-- //var作用域的问题(全局作用域 函数作用域) -->
+		let d = 100; {
+		<!-- //暂存死区  -->
+		console.log(d) let d = 200 }
+
+		<script>
+			//循环走完后才会走定时器
+			for (var i = 0; i < 10; i++) {
+				setTimeout(function () {
+					console.log(i)
+				})
+			} //10 *10
+			for (var i = 0; i < 10; i++) {
+				;(function (i) {
+					setTimeout(function () {
+						console.log(i)
+					})
+				})(i)
+			} //0-9
+			for (let i = 0; i < 10; i++) {
+				setTimeout(function () {
+					console.log(i)
+				})
+			} //0-9 作用域，每个作用域都绑定了自己的i
+
+            //const 常量 不会变的量(地址不变即可)
+            const pi = '3.14'
+            // pi = 3.25 //Assignment to constant variable.
+		</script>
+	</body>
+</html>

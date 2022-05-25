@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //...展开运算符 只能拷贝一层
+        //合并数组
+        let arr1 =[1,2,3]
+        let arr2 =[4,5,6]
+        let arr3 = arr1.concat(arr2)
+        let arr4 = [...arr1,...arr2]
+        console.log(arr3,arr4)
+        //合并对象
+        let obj1 = {name: 'dadwda'}
+        let obj2 = {age: 11,name:'ccc'}
+        let obj5 = {age:{count:18},name:'jw'}
+        //深拷贝（拷贝后无关） 浅拷贝（拷贝后还有关）
+        //把原来的放在新对象里，用一个新的age把原来的age也拷贝一份
+        let newObj5 = {...obj5,age:{...obj5.age}}
+        let obj3 = Object.assign(obj1,obj2)
+        let obj4 = {...obj1,...obj2}
+        let obj6 = {...obj1,...obj5}
+        obj5.age.count=100
+        console.log(obj6)//count: 100
+        console.log(obj3,obj4)
+
+        let obj7 = {age: 11,name:'ccc',fn:function(){}, aa: undefined}
+        let obj8 = {age:{count:18},name:'jw'}
+        let obj9 = JSON.parse(JSON.stringify({...obj7,...obj8}))//先把对象转成字符串,字符串转对象
+        //不能转换函数，undefined
+        obj8.age.count=2000
+        console.log(obj9)
+        
+        //自己实现深拷贝（递归拷贝 要一层一层的拷贝）
+        function deepClone(obj,hash=new WeakMap()){
+            //1判断传递的类型
+            if(obj == null) return obj //如果传的是空就直接返回
+            if(obj instanceof Date) return new Date(obj) //返回一个日期
+            if(obj instanceof RegExp) return new RegExp(obj) //返回一个正则
+            if(typeof obj !== 'object') return obj;//不是数组或者对象就不用拷贝了
+            if(hash.has(obj)) return hash.get(obj); //如果weakmap中有对象就直接返回
+            let cloneObj = new obj.constructor;//要不是数组要么是对象
+            hash.set(obj,cloneObj)
+            //如果是对象把他放到weakMap中，如果在拷贝这个对象这个对象就存在了，直接返回对象即可
+            //实现深拷贝
+            for(let key in obj){
+                if(obj.hasOwnProperty(key)){//避免拷贝原型链上的
+                    //如果赋予的值是对象，我就把自己和对象放到weakmap中
+                    cloneObj[key] = deepClone(obj[key],hash)
+                }
+            }
+            return cloneObj
+        }
+        let obj10 = {age:{name:123}}
+        obj10.xxx =obj10; //循环引用，死循环        
+        let n = deepClone(obj10)
+        obj10.age.name =1111
+        console.log(n)
+    </script>
+</body>
+</html>

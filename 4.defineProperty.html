@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script>
+			//通过Object.defineProperty定义属性 可以增加拦截器
+			// let obj = {}
+			// let other= ''
+			// //默认不可枚举 不能删除 不能重写
+			// Object.defineProperty(obj,'name',{
+			//     enumerable:true,//可枚举
+			//     configurable: true, //能不能删除这个属性
+			//     // writable:true,//可以重写
+			//     // value:'hello',
+			//     get(){//读取方法
+			//         console.log('-----')
+			//         return other //console.log(obj.name)
+			//     },
+			//     set(val){//设置方法
+			//         other =val  //console.log(obj.name) //456
+			//     }
+			//     //不能同时设置get set 和writable
+			// })
+			// obj.name =456
+			// console.log(obj.name) //456
+
+			//对象的setter和getter
+			let obj = {
+				other: '123',
+				get name() {
+					//读取方法
+					return this.other
+				},
+				set name(val) {
+					//设置方法
+					this.other = val
+				},
+			}
+			obj.name = 456
+			console.log(obj.name)
+
+			//vue的数据劫持（把所有的属性都劫持 改成get和set方法）
+			function update() {
+				console.log('更新视图')
+			} //改数据就调用更新方法
+			let data = {
+				name: 'aaa',
+				age: 18,
+				address: {
+					location: 'abada',
+				},
+			} //数据
+			//Object.defineProperty只能用在对象上，数组也不行
+			function observer(obj) {
+				if (typeof obj !== 'object') return obj
+				for (let key in obj) {
+					defineReactive(obj, key, obj[key])
+				}
+			}
+			function defineReactive(obj, key, value) {
+				//定义响应式,属于当前作用域，闭包
+				observer(value)
+				Object.defineProperty(obj, key, {
+					get() {
+						return value
+					},
+					set(val) {
+						if (val !== value) {
+							observer(obj) //如果改的值是对象
+							update() //改值就触发
+							value = val
+						}
+					},
+				})
+			}
+			observer(data) //观察data
+			// data.name = 'ccccc'
+			// data.address.location = 'beijing'
+			// console.log(data, 'aaa')
+            data.address = [1,2,3]
+            let methods = ['push','slice','pop','sort','reverse','unshift']
+            methods.forEach(method=>{
+                //面向切片开发 装饰器
+                let oldMethod = Array.prototype[method]//取出原有的方法
+                Array.prototype[method] = function(){
+                    update()
+                    oldMethod.call(this,...arguments)
+                }
+            })
+            data.address.push(4)
+		</script>
+	</body>
+</html>

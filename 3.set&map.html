@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //set map是两种存储结构
+        //set 集合，不能放重复的东西
+        let s = new Set([1,2,3,4,1,2,3,4])
+        s.add('5') //添加和删除
+        s.delete('5')
+        console.log(s.values())//SetIterator {1, 2, 3, 4}
+        console.log(s)//1234
+        //集合 并集 交集 差集
+        let s1 = [1,2,3,1,2,6]
+        let s2 = [3,4,5,1,2]
+        let s4 = new Set(s1)
+        let s5 = new Set(s2)
+        console.log([...new Set([...s1,...s2])]) //并集 [1,2,3,6,4,5]
+        //filter返回true表示留下
+        console.log([...new Set(s1)].filter(function(item){
+            return  new Set(s2).has(item)
+        }))//[1,2,3]交集
+        console.log([...new Set(s1)].filter(function(item){
+            return  !new Set(s2).has(item)
+        }))//[6]差集
+
+        //map 是有key的,不能重复
+        // let m = new Map()
+        let m = new WeakMap() //WeakMap的key必须是对象类型
+        // m.set('name','zzzz')
+        // m.set('name', '123')
+        let obj = {name: 1}
+        m.set(obj,'456') //[[Entries]]0: {"name" => "123"}1: {Object => "456"} obj引用的空间被set所引用
+        obj = null //把obj清空，这个空间还是存在的 WeakMap可以清空，v8引擎回收机制
+        console.log(m)//Map(1) {'name' => '123'} 不可重复
+    </script>
+</body>
+</html>
