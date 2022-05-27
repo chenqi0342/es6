@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>es6class</title>
+</head>
+<body>
+    <script>
+        //es6 class
+        class Animal {
+            //es6只支持静态方法 es7支持静态属性
+            static flag(){
+                return 123
+            }
+            constructor(name){
+                this.name = name;
+                this.eat  = '吃肉'
+            }
+            say(){//原型上的方法
+                //es6规范里 如果单独调用原型上的方法 this是不存在的
+                // console.log(this)
+                console.log('say')
+            }
+        }
+        //类不能当做函数调用
+        // Animal() //constructor Animal cannot be invoked without 'new'
+        let animal = new Animal()
+        console.log(animal.__proto__.say())//undefined
+        console.log(Animal.flag())
+
+        class Tiger extends Animal{ //构造函数+原型
+
+        }
+        let tiger = new Tiger()
+        console.log(tiger.eat)//'吃肉'
+        //静态方法可以被继承
+        console.log(Tiger.flag())//123
+    </script>
+</body>
+</html>

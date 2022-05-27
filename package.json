@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/chenqi0342/es6/issues"
   },
-  "homepage": "https://github.com/chenqi0342/es6#readme"
+  "homepage": "https://github.com/chenqi0342/es6#readme",
+  "dependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.2",
+    "@babel/plugin-proposal-decorators": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "core-js": "^3.22.7",
+    "polyfill": "^0.1.0"
+  }
 }

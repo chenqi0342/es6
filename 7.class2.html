@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>类的继承</title>
+	</head>
+	<body>
+		<script>
+			//Animal构造函数  prototype 原型 __proto__原型链
+			//prototype 上有 constructor
+			//prototype(原型)通过constructor找到自己的构造函数Animal
+			//a1 a2实例 __proto__原型链
+			//实例通过__proto__(原型链)找到当前构造函数的prototype(原型)
+
+			//类的继承
+			function Animal(name) {
+				//属性分为两种 实例上的属性 公有属性（原型上的属性)
+				this.name = name
+				this.eat = '吃肉' //给new的对象添加属性
+			}
+			//prototype 原型
+			Animal.prototype.address = { location: '衫' }
+
+			//1继承父类实例上的属性/公共方法
+			function Tiger(name) {
+				this.name = name
+				this.age = 10
+				//让子类的this指向父类
+				Animal.call(this)
+				console.log(this) //Tiger
+			}
+            //子类的原型指向父类的原型
+            //子类的原型上找不到，再去父类的原型上查找
+            // Tiger.prototype.__proto__ = Animal.prototype;
+            //Object.create()
+            Tiger.prototype = Object.create(Animal.prototype)
+			Tiger.prototype.say = function () {
+				console.log('说话')
+			} //给Tiger原型上添加属性
+
+             
+			let tiger = new Tiger()
+            //父类构造函数上的属性：让父类执行，执行的时候this指向子类
+			console.log(tiger.eat) //吃肉
+            //父类公有属性：子类的原型上找不到，再去父类的原型上查找
+            console.log(tiger.address)//{ location: '衫' }
+		</script>
+	</body>
+</html>
