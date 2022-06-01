@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<!-- Promise是构造函数 -->
+		<!-- Promise是异步编程的一种解决方案，比传统的解决方案，回调函数和事件更合理和强大 -->
+		<!-- 三个状态 pending fulfilled rejected -->
+
+		<!--原型方法-->
+		<!-- Promise.prototype.then -->
+		<!-- 支持链式调用 -->
+		<!-- 接收两个参数，成功的回调函数，失败的回调函数 -->
+		<!-- 返回一个新的Promise -->
+		<!-- 前一个成功或者失败的值，被下一个then方法获取或者捕获 -->
+
+		<!-- Promise.prototype.catch -->
+		<!-- 捕捉Promise错误，捕捉变成reject后的错误 -->
+
+		<!-- Promise.prototype.finally -->
+		<!-- 不管Promise对象最后状态如何，都会执行的操作-->
+		<!-- 关闭loading状态 -->
+		<!-- finally(()=>{console.log(`loading end...`)}) -->
+
+		<!--实例方法-->
+		<!-- Promise.all -->
+		<!-- 用于将多个Promise实例包装成一个新的Promise实例  -->
+
+		<!-- Promise.race -->
+		<!-- Promise.race 方法同样是将多个 Promise 实例，包装成一个新的 Promise 实例 -->
+		<!-- Promise.all并发，每一个Promise状态都发生改变再执行 -->
+		<!-- Promise.race继发，只要有一个Promise状态都改变，就作为回调函数的结果执行 -->
+
+		<!-- Promise.reject-->
+		<!-- 返回一个Promise实例 -> rejected -->
+		<script>
+			// new Promise(function(resolve, reject){
+			//    console.log(`loading start...`)
+			//    let fullName = "freemen";
+			//    if(fullName==="Vinko") {
+			//       resolve(1);
+			//    }else{
+			//       reject('promise error')
+			//    }
+			// }).then(res=>{
+			//   console.log(`res`, res)
+			// },rejected=>{
+			//   console.log(`rejected`, rejected)
+			// })
+            //需要下一个promise捕获错误
+			Promise.reject('promise error').then(null, (rejected) => {
+				console.log(`rejected`, rejected)
+			})
+		</script>
+	</body>
+</html>

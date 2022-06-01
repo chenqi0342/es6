@@ -8,6 +8,9 @@
 </head>
 <body>
     <script>
+        //箭头函数的this在定义的时候就决定了，没有办法更改
+        //不可被当做构造函数
+        //没有arguments对象接收参数可以(...args)=>{}
         //箭头 没有this  没有arguments
         // function a(){}//变量提升
         // let a = function(x,y){return {total:x+y} }
@@ -42,6 +45,10 @@
             }
         }
         obj.fn()
+
+        //...运算符的实现原理
+        //vat array = [1,2,3,4]
+        //[].concat(array)
     </script>
 </body>
 </html>
